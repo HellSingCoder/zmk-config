@@ -34,46 +34,34 @@ static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
     return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index)};
 }
 
-static jmp_buf s_jumpBuffer;
-
-void TrySettingLayerIcon(const char *layer_label, uint8_t active_layer_index) { 
-  if (setjmp(s_jumpBuffer)) {
-    // The longjmp was executed and returned control here
-    printf("Exception happened here\n");
-  } else {
-
-    // Normal code execution
-    lv_img_set_src(icon, &layer_unknown);
-
-    switch (active_layer_index) {
-    case 0:
-        (icon, &layer_0);
-        break;
-    case 1:
-        lv_img_set_src(icon, &layer_1);
-        break;
-    case 2:
-        lv_img_set_src(icon, &layer_2);
-        break;
-    case 3:
-        lv_img_set_src(icon, &layer_3);
-        break;
-    }
-
-    TestSettingLayerIconSuccessful();
-  }
-}
-
-void TestSettingLayerIconSuccessful() {
-  // Rough equivalent of `throw`
-  longjmp(s_jumpBuffer, 42);
-}
-
 static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state) {
     const char *layer_label = state.label;
     uint8_t active_layer_index = state.index;
 
-    TrySettingLayerIcon(*layer_label, active_layer_index);
+    lv_img_set_src(icon, &layer_unknown);
+
+    switch (active_layer_index) {
+    case 0:
+        if(lv_img_set_src(icon, &layer_0) =! 1) {
+            printf("error case 0");
+        }
+        break;
+    case 1:
+        if(lv_img_set_src(icon, &layer_1) =! 1) {
+            printf("error case 1");
+        }
+        break;
+    case 2:
+        if(lv_img_set_src(icon, &layer_2) =! 1) {
+            printf("error case 2");
+        }
+        break;
+    case 3:
+        if(lv_img_set_src(icon, &layer_3) =! 1) {
+            printf("error case 3");
+        }
+        break;
+    }
 }
 
 static void layer_status_update_cb(struct layer_status_state state) {
