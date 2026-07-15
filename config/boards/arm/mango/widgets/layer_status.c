@@ -42,16 +42,16 @@ static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state)
 
     switch (active_layer_index) {
     case 0:
-        lv_img_set_src(icon, &layer_0)
+        lv_img_set_src(icon, &layer_0);
         break;
     case 1:
-        lv_img_set_src(icon, &layer_1)
+        lv_img_set_src(icon, &layer_1);
         break;
     case 2:
-        lv_img_set_src(icon, &layer_2)
+        lv_img_set_src(icon, &layer_2);
         break;
     case 3:
-        lv_img_set_src(icon, &layer_3)
+        lv_img_set_src(icon, &layer_3);
         break;
     }
 }
