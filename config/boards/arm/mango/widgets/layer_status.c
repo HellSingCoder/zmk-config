@@ -42,29 +42,18 @@ static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state)
 
     switch (active_layer_index) {
     case 0:
-        if(lv_img_set_src(icon, &layer_0) =! void) {
-           goto skip;
-        }
+        lv_img_set_src(icon, &layer_0)
         break;
     case 1:
-        if(lv_img_set_src(icon, &layer_1) =! void) {
-            goto skip;
-        }
+        lv_img_set_src(icon, &layer_1)
         break;
     case 2:
-        if(lv_img_set_src(icon, &layer_2) =! void) {
-            goto skip;
-        }
+        lv_img_set_src(icon, &layer_2)
         break;
     case 3:
-        if(lv_img_set_src(icon, &layer_3) =! void) {
-            goto skip;
-        }
+        lv_img_set_src(icon, &layer_3)
         break;
     }
-
-    skip:
-    // skip
 }
 
 static void layer_status_update_cb(struct layer_status_state state) {
