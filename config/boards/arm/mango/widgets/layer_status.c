@@ -23,42 +23,45 @@ LV_IMG_DECLARE(layer_3);
 LV_IMG_DECLARE(layer_unknown);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
+static lv_obj_t *icon = (lv_obj_t *)icon;
 
 struct layer_status_state {
     uint8_t index;
     const char *label;
+    lv_obj_t *icon;
 };
 
 static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
     uint8_t index = zmk_keymap_highest_layer_active();
-    return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index)};
+    return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index), .icon = *icon};
 }
 
-static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state) {
+static void set_layer_indicator(struct layer_status_state state) {
     const char *layer_label = state.label;
     uint8_t active_layer_index = state.index;
-
-    lv_img_set_src(icon, &layer_unknown);
+    lv_obj_t *icon = state.icon;
 
     switch (active_layer_index) {
     case 0:
-        lv_img_set_src(icon, &layer_0);
+        lv_img_set_src(icon, layer_0);
         break;
     case 1:
-        lv_img_set_src(icon, &layer_1);
+        lv_img_set_src(icon, layer_1);
         break;
     case 2:
-        lv_img_set_src(icon, &layer_2);
+        lv_img_set_src(icon, layer_2);
         break;
     case 3:
-        lv_img_set_src(icon, &layer_3);
+        lv_img_set_src(icon, layer_3);
         break;
+    default:
+        lv_img_set_src(icon, layer_unknown);
     }
 }
 
 static void layer_status_update_cb(struct layer_status_state state) {
     struct zmk_widget_layer_status *widget;
-    //SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_layer_indicator(widget->obj, state); }
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_layer_indicator(widget->obj, state); }
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb, layer_status_get_state)
