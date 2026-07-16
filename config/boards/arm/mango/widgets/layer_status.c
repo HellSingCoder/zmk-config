@@ -22,8 +22,8 @@ LV_IMG_DECLARE(layer_2);
 LV_IMG_DECLARE(layer_3);
 LV_IMG_DECLARE(layer_unknown);
 
-static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
-static lv_obj_t *icon = (lv_obj_t *)icon;
+static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets); 
+lv_obj_t *icon = (lv_obj_t *)icon;
 
 struct layer_status_state {
     uint8_t index;
