@@ -23,12 +23,12 @@ LV_IMG_DECLARE(layer_3);
 LV_IMG_DECLARE(layer_unknown);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets); 
-lv_obj_t *layer_icon = (lv_obj_t *)layer_icon;
+lv_obj_t *layer_icon;
 
 struct layer_status_state {
     uint8_t index;
     const char *label;
-    lv_obj_t *icon;
+    lv_obj_t *icon = (lv_obj_t *)layer_icon;
 };
 
 static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
