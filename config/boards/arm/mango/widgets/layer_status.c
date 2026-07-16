@@ -23,7 +23,7 @@ LV_IMG_DECLARE(layer_3);
 LV_IMG_DECLARE(layer_unknown);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets); 
-lv_obj_t *icon_pointer;
+lv_obj_t *layer_icon;
 bool initialized = false;
 
 struct layer_status_state {
@@ -35,10 +35,10 @@ struct layer_status_state {
 static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
     uint8_t index = zmk_keymap_highest_layer_active();
     if (!initialized) {
-        *icon_pointer = (lv_obj_t *)icon;
+        *layer_icon = (lv_obj_t *)layer_icon;
         initialized = true;
     }
-    return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index), .icon = *icon_pointer};
+    return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index), .icon = *layer_icon};
 }
 
 static void set_layer_indicator(struct layer_status_state state) {
