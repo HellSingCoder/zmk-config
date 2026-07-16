@@ -29,7 +29,7 @@ struct layer_status_state {
     const char *label;
 };
 
-static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
+static struct layer_status_state get_state(const zmk_event_t *eh) {
     uint8_t index = zmk_keymap_highest_layer_active();
     return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index)};
 }
@@ -61,9 +61,9 @@ static void layer_status_update_cb(struct layer_status_state state) {
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_layer_indicator(widget->obj, state); }
 }
 
-ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb, layer_status_get_state)
+ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb, get_state)
 
-ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_state_changed);
+ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_changed);
 
 int zmk_widget_layer_status_init(struct zmk_widget_layer_status *widget, lv_obj_t *parent) {
     widget->obj = lv_img_create(parent);
