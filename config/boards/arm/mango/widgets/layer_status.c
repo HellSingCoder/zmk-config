@@ -63,7 +63,7 @@ static void layer_status_update_cb(struct layer_status_state state) {
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb, get_state)
 
-ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_changed);
+ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_state_changed);
 
 int zmk_widget_layer_status_init(struct zmk_widget_layer_status *widget, lv_obj_t *parent) {
     widget->obj = lv_img_create(parent);
