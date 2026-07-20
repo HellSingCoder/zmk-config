@@ -48,6 +48,8 @@ static struct profile_status_state get_state(const zmk_event_t *_eh) {
 }
 
 static void set_profile_indicator(lv_obj_t *icon, struct profile_status_state state) {
+    lv_obj_invalidate(icon);
+
     switch (state.selected_endpoint.transport) {
     case ZMK_TRANSPORT_USB:
         lv_img_set_src(icon, &usb_profile);

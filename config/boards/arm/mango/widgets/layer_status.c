@@ -38,6 +38,8 @@ static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state)
     const char *layer_label = state.label;
     uint8_t active_layer_index = state.index;
 
+    lv_obj_invalidate(icon);
+
     switch (active_layer_index) {
     case 0:
         lv_img_set_src(icon, &layer_0);
