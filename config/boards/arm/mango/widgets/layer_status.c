@@ -19,31 +19,31 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 LV_IMG_DECLARE(layer_0);
 LV_IMG_DECLARE(layer_0_1);
 const void *layer_0_images[] = {
-    &layer_0, &layer_0_1,
+    &layer_0_1, &layer_0, 
 };
 
 LV_IMG_DECLARE(layer_1);
 LV_IMG_DECLARE(layer_1_1);
 const void *layer_1_images[] = {
-    &layer_1, &layer_1_1,
+    &layer_1_1, &layer_1, 
 };
 
 LV_IMG_DECLARE(layer_2);
 LV_IMG_DECLARE(layer_2_1);
 const void *layer_2_images[] = {
-    &layer_2, &layer_2_1,
+    &layer_2_1, &layer_2, 
 };
 
 LV_IMG_DECLARE(layer_3);
 LV_IMG_DECLARE(layer_3_1);
 const void *layer_3_images[] = {
-    &layer_3, &layer_3_1,
+    &layer_3_1, &layer_3, 
 };
 
 LV_IMG_DECLARE(layer_unknown);
 LV_IMG_DECLARE(layer_unknown_1);
 const void *layer_unknown_images[] = {
-    &layer_unknown, &layer_unknown_1,
+    &layer_unknown_1, &layer_unknown, 
 };
 
 // explicit function declarations
@@ -67,7 +67,7 @@ static struct layer_status_state get_state(const zmk_event_t *eh) {
 
 void animate_layer_images(void * var, int value) {
     lv_obj_t *obj = (lv_obj_t *)var;
-    lv_img_set_src(obj, layer_images[current_frame]);
+    lv_img_set_src(obj, layer_images[current_layer_frame]);
     if (current_layer_frame == 0){
         current_layer_frame = 1;
     } else {
