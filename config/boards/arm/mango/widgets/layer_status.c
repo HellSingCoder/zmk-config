@@ -99,7 +99,7 @@ static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state)
     // restart animation
     struct zmk_widget_layer_status *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
-        lv_anim_del(var, (lv_anim_exec_xcb_t) animate_images);
+        lv_anim_del(icon, (lv_anim_exec_xcb_t) animate_images);
         current_frame = 0;
         init_anim(widget);
     }
