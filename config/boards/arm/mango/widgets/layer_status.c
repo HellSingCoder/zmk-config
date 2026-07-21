@@ -47,11 +47,11 @@ const void *layer_unknown_images[] = {
 };
 
 // explicit function declarations
-void init_anim(struct zmk_widget_layer_status *widget);
+void init_layer_anim(struct zmk_widget_layer_status *widget);
 
-lv_anim_t anim;
+lv_anim_t layer_anim;
 const void **layer_images;
-int current_frame = 0;
+int current_layer_frame = 0;
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets); 
 
@@ -68,10 +68,10 @@ static struct layer_status_state get_state(const zmk_event_t *eh) {
 void animate_layer_images(void * var, int value) {
     lv_obj_t *obj = (lv_obj_t *)var;
     lv_img_set_src(obj, layer_images[current_frame]);
-    if (current_frame == 0){
-        current_frame = 1;
+    if (current_layer_frame == 0){
+        current_layer_frame = 1;
     } else {
-        current_frame = 0;
+        current_layer_frame = 0;
     }
 }
 
@@ -100,21 +100,21 @@ static void set_layer_indicator(lv_obj_t *icon, struct layer_status_state state)
     struct zmk_widget_layer_status *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
         lv_anim_del(icon, (lv_anim_exec_xcb_t) animate_layer_images);
-        current_frame = 0;
-        init_anim(widget);
+        current_layer_frame = 0;
+        init_layer_anim(widget);
     }
 }
 
-void init_anim(struct zmk_widget_layer_status *widget) {
+void init_layer_anim(struct zmk_widget_layer_status *widget) {
     // Initialize the animation
-    lv_anim_init(&anim);
-    lv_anim_set_var(&anim, widget->obj);
-    lv_anim_set_exec_cb(&anim, (lv_anim_exec_xcb_t) animate_layer_images);
-    lv_anim_set_time(&anim, 100);
-    lv_anim_set_values(&anim, 0, 1);
-    lv_anim_set_delay(&anim, 0);
-    lv_anim_set_repeat_count(&anim, 0);
-    lv_anim_start(&anim);
+    lv_anim_init(&layer_anim);
+    lv_anim_set_var(&layer_anim, widget->obj);
+    lv_anim_set_exec_cb(&layer_anim, (lv_anim_exec_xcb_t) animate_layer_images);
+    lv_anim_set_time(&layer_anim, 100);
+    lv_anim_set_values(&layer_anim, 0, 1);
+    lv_anim_set_delay(&layer_anim, 0);
+    lv_anim_set_repeat_count(&layer_anim, 0);
+    lv_anim_start(&layer_anim);
 }
 
 static void layer_status_update_cb(struct layer_status_state state) {
@@ -129,8 +129,8 @@ ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_state_changed);
 int zmk_widget_layer_status_init(struct zmk_widget_layer_status *widget, lv_obj_t *parent) {
     widget->obj = lv_img_create(parent);
 
-    layer_images = layer_0_images;
-    init_anim(widget);
+    images = layer_0_images;
+    init_layer_anim(widget);
 
     widget_layer_status_init();
     return 0;
